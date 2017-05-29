@@ -3,11 +3,16 @@
 
 #Anti-BruteForce for Centos Made By Kirill Kamaldinov
 
-##check ? times
-bcan=/scripts/check.badlogin
+############for Centos change wlog to /var/log/secure############
+#working log#
+wlog="/var/log/auth.log"
 
-##Email address to send notification to 
-mail=notifierap@gmail.com
+###Working Directory [PWD]
+bcan=MyWorkingDirectory
+
+###Email address to send notification to 
+mail=EmailForNotifications
+#BasicFunctions[creates if not existing]
 iffun(){
     if [ ! -f @1 ]; then
         touch @1
@@ -20,8 +25,8 @@ iffundir(){
 }
 iffun "$bcan/checker.art"
 echo "-- $(date +%Y-%m-%d:%H:%M:%S) --" >> $bcan/checker.art
-##how many times
 
+##how many times
 howman=$(cat /var/log/auth.log | egrep "Fail|fail" | grep -Eo '([0-9]{1,3}\.){3}[0-9]{1,3}' |sort | uniq -c | sort -n |tail -1 | awk '{print $1}')
 if [ $? = "0" ]; then 
 	echo "howman - OK" >> $bcan/checker.art; else "howman - error!" >> $bcan/checker.art
