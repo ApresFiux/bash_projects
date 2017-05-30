@@ -12,6 +12,7 @@ bcan=MyWorkingDirectory
 
 ###Email address to send notification to 
 mail=EmailForNotifications
+
 #BasicFunctions[creates if not existing]
 iffun(){
     if [ ! -f @1 ]; then
@@ -26,13 +27,15 @@ iffundir(){
 iffun "$bcan/checker.art"
 echo "-- $(date +%Y-%m-%d:%H:%M:%S) --" >> $bcan/checker.art
 
-##how many times
+##how many bad logins
 howman=$(cat /var/log/auth.log | egrep "Fail|fail" | grep -Eo '([0-9]{1,3}\.){3}[0-9]{1,3}' |sort | uniq -c | sort -n |tail -1 | awk '{print $1}')
 if [ $? = "0" ]; then 
 	echo "howman - OK" >> $bcan/checker.art; else "howman - error!" >> $bcan/checker.art
 fi
-##which IP
+
+##problematic IP address
 whois=$(cat /var/log/auth.log | egrep "Fail|fail" | grep -Eo '([0-9]{1,3}\.){3}[0-9]{1,3}' |sort | uniq -c | sort -n |tail -1 | awk '{print $2}')
+
 if [ $? = "0" ]; then 
         echo "whois - OK" >> $bcan/checker.art; else "whois - error!" >> $bcan/checker.art
 fi
