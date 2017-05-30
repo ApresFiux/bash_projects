@@ -94,3 +94,4 @@ else
 #			expr $bcount + 1 > $bcan/bcount.art
  exit 0
 fi
+#Alpha $1
